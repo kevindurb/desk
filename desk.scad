@@ -1,5 +1,7 @@
 include <BOSL2/std.scad>
 
+angle = 0;
+
 work_area_size = [
   40 * INCH,
   24 * INCH,
@@ -27,7 +29,7 @@ module wall_box() {
       color_this("tan")
         back(box_size.y - (0.75 * INCH) - 1)
         attach(FRONT, BACK)
-        cube(box_size - [(1.5 * INCH), (0.75 * INCH), (1.5 * INCH)])
+        cube(box_size - [(1.5 * INCH), (0.75 * INCH), (1.5 * INCH)]);
       children();
     }
 }
@@ -38,8 +40,7 @@ module work_area() {
       children();
 }
 
-
-work_area()
-  attach(TOP, BOT, align=BACK)
-  back(2 * INCH)
-    wall_box();
+wall_box()
+  attach(BOT, TOP, align=BACK)
+    fwd(2 * INCH)
+    work_area();
