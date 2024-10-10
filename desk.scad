@@ -1,5 +1,7 @@
 include <BOSL2/std.scad>
 
+$fa = 0.01;
+
 angle = 0;
 
 work_area_size = [
@@ -17,7 +19,7 @@ box_size = [
 
 monitor_size = [
   28 * INCH,
-  2 * INCH,
+  3 * INCH,
   20 * INCH,
 ];
 
@@ -25,12 +27,12 @@ module wall_box() {
   color_this("tan")
     diff()
     cube(box_size) {
-      tag("remove")
+      tag_this("remove")
       color_this("tan")
         back(box_size.y - (0.75 * INCH) - 1)
         attach(FRONT, BACK)
         cube(box_size - [(1.5 * INCH), (0.75 * INCH), (1.5 * INCH)]);
-      tag("keep") children();
+      tag_this("keep") tag_scope() children();
     }
 }
 
@@ -41,8 +43,15 @@ module work_area() {
 }
 
 module monitor() {
-  color_this("darkgrey")
-    cube(monitor_size);
+  recolor("darkgrey")
+    intersect()
+    cube(monitor_size)
+    attach(FRONT, BACK)
+      down(monitor_size.y)
+      tag_this("intersect") diff()
+        cylinder(h=monitor_size.z + 2, r=1500)
+        attach(CENTER, CENTER)
+        tag_this("remove") cylinder(h=monitor_size.z + 4, r=1500 - (0.5*INCH));
 }
 
 wall_box() {
