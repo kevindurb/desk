@@ -1,9 +1,17 @@
 include <BOSL2/std.scad>
 
+bosl_required("2.0.716");
+
+/* [Hidden] */
+$align_msg=false;
 $fa = 0.01;
 
-open = 0; // [0:0.01:1]
+/* [Open Close] */
+open_desk = 0; // [0:0.01:1]
 open_door = 0; // [0:0.01:1]
+
+/* [Size] */
+monitor_curve = 1500;
 
 work_area_size = [
   48*INCH,
@@ -23,8 +31,6 @@ monitor_size = [
   3 * INCH,
   20 * INCH,
 ];
-
-monitor_curve = 1500;
 
 module electronics_door() {
   tag_scope("electronics_door")
@@ -125,7 +131,7 @@ wall_box() {
   attach(BOT, TOP, align=BACK)
     fwd(box_size.y - work_area_offset)
     up(0.75*INCH)
-    xrot(90 - (open * 90), cp=[0, -work_area_offset, 0])
+    xrot(90 - (open_desk * 90), cp=[0, -work_area_offset, 0])
     work_area();
 
   align(FRONT, TOP, inside = true)
