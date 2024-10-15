@@ -27,20 +27,28 @@ monitor_size = [
 monitor_curve = 1500;
 
 module electronics_door() {
-  color_this("darkgrey")
+  tag_scope("electronics_door")
+  color("darkgrey")
     right(0.75*INCH)
     up(0.75*INCH)
     align(FRONT, LEFT+BOTTOM, inside = true)
     zrot(open_door*-90)
     diff()
-    cube([6*INCH, 0.5*INCH, 11.5*INCH])
+    cube([6*INCH, 0.5*INCH, 11.5*INCH]) {
       tag_this("remove")
-      fwd(0.5*INCH - 1)
-      attach(BACK, BOTTOM)
-      cylinder(h=0.5*INCH, d=3*INCH);
+      align(CENTER, CENTER)
+      xrot(90)
+      cylinder(h=1*INCH, d=3*INCH);
+
+      tag_this("remove")
+      position(CENTER)
+      xrot(90)
+      cylinder(h=0.25*INCH + 1, r1=1.75*INCH, r2=2*INCH);
+    }
 }
 
 module wall_box() {
+  tag_scope("wall_box")
   color_this("tan")
     diff()
     cube(box_size) {
@@ -89,17 +97,19 @@ module wall_box() {
       tag_this("keep")
       electronics_door();
 
-      tag_this("keep") tag_scope() children();
+      tag_this("keep") children();
     }
 }
 
 module work_area() {
+  tag_scope("work_area")
   color_this("white")
     cuboid(work_area_size, chamfer = 0.75 * INCH, edges = [TOP+FRONT, TOP+LEFT, TOP+RIGHT, TOP+BACK])
       children();
 }
 
 module monitor() {
+  tag_scope("monitor")
   recolor("black")
     intersect()
     cube(monitor_size)
