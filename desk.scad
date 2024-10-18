@@ -36,8 +36,8 @@ module electronics_door() {
   tag_scope("electronics_door")
   color("darkgrey")
     right(0.75*INCH)
-    up(0.75*INCH)
-    align(FRONT, LEFT+BOTTOM, inside = true)
+    down(0.75*INCH)
+    align(FRONT, LEFT+TOP, inside = true)
     zrot(open_door*-90)
     diff()
     cube([6*INCH, 0.5*INCH, 11.5*INCH]) {
