@@ -99,10 +99,6 @@ module wall_box() {
         align(FRONT, LEFT, inside = true)
         cube([6*INCH, box_size.y, 0.5*INCH]);
 
-      // left door
-      tag_this("keep")
-      electronics_door();
-
       tag_this("keep") children();
     }
 }
